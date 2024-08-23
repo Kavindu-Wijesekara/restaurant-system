@@ -4,7 +4,7 @@
     <deployment>
       <artifact name="abc-restaurant-system:war exploded">
         <settings>
-          <option name="CONTEXT_PATH" value="/abc_restaurant_system_war_exploded" />
+          <option name="CONTEXT_PATH" value="/" />
         </settings>
       </artifact>
     </deployment>
