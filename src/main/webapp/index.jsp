@@ -1,3 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    response.setHeader("Cache-Control","no-cache");
+    response.setHeader("Cache-Control","no-store");
+    response.setHeader("Pragma","no-cache");
+    response.setDateHeader ("Expires", 0);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +30,12 @@
                 <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reservations</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                <% if (session.getAttribute("id") == null) { %>
+                <li class="nav-item"><a class="nav-link" href="auth?action-type=login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="auth?action-type=register">Sign Up</a></li>
+                <% } else { %>
+                <li class="nav-item"><a class="nav-link" href="auth?action-type=logout">Logout</a></li>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -32,6 +44,7 @@
 <main>
     <!-- Hero Section -->
     <section class="hero bg-dark text-light text-center py-5">
+        <h1>Welcome, <%= session.getAttribute("full_name") %></h1>
         <div class="container">
             <h1 class="display-4">Welcome to ABC Restaurant</h1>
             <p class="lead">Delicious food, Cozy Atmosphere, Memorable Experience</p>

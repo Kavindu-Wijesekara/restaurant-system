@@ -10,8 +10,7 @@
 <body>
 <div class="container mt-5">
     <h2>Customer Sign-Up</h2>
-    <form action="Register" class="register-form" method="POST" name="register-form" onsubmit="return validateForm()">
-        <input type="hidden" name="action-type" value="Register">
+    <form method="POST" name="register-form" id="register-form" onsubmit="return validateForm()">
         <div class="mb-3">
             <label for="full_name" class="form-label">First Name</label>
             <input type="text" class="form-control" id="full_name" name="full_name" required>
@@ -100,14 +99,43 @@
         })
     }
 
-    const message = '<%= request.getAttribute("message") %>';
-    const title = '<%= request.getAttribute("title") %>';
-    const icon = '<%= request.getAttribute("icon") %>';
-    if (message !== "null") {
-        document.addEventListener('DOMContentLoaded', () => {
-            showDialogBox(title, message, icon);
-        })
-    }
+    $(document).ready(function() {
+        $('#register-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent form from submitting normally
+
+            $.ajax({
+                type: 'POST',
+                url: '<%= request.getContextPath() %>/auth?action-type=register',
+                data: $(this).serialize(), // Serialize form data
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    showDialogBox('Success', response.message, 'success');
+                    if(response.success) {
+                        Swal.fire({
+                            title: 'Success',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = response.redirectUrl;
+                        });
+
+                        // Optionally, you can set a timeout to automatically redirect
+                        setTimeout(() => {
+                            window.location.href = response.redirectUrl;
+                        }, 5000); // Redirect after 5 seconds
+                    } else {
+                        showDialogBox('Error', response.message, 'error');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX error:", textStatus, errorThrown);
+                    showDialogBox('Error', "An error occurred while processing your request. Please try again.", 'error');
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

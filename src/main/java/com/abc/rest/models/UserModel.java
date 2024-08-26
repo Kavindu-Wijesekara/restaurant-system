@@ -30,6 +30,16 @@ public class UserModel {
     @SerializedName("created_at")
     private String createdAt;
 
+    public UserModel(int id, String fullName, String phone, String address, String email, String password, String role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNumber = phone;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     // Getters and Setters
     public int getId() {
         return id;
