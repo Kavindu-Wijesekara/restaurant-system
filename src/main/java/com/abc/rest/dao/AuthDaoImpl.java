@@ -5,7 +5,6 @@ import com.abc.rest.models.UserModel;
 import com.abc.rest.utils.database.ConnectionFactory;
 import com.abc.rest.utils.encrypter.HashPassword;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +21,7 @@ public class AuthDaoImpl implements AuthDao {
     }
 
     @Override
-    public UserModel loginUser(LoginModel loginModel, HttpServletRequest req) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+    public UserModel loginUser(LoginModel loginModel) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         Connection con = getDbConnection();
         String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 
@@ -45,14 +44,6 @@ public class AuthDaoImpl implements AuthDao {
             }
         }
         return null;
-    }
-
-    private String determineRedirectUrl(String role, String contextPath) {
-        return switch (role) {
-            case "ADMIN" -> contextPath + "/admin";
-            case "STAFF" -> contextPath + "/staff";
-            default -> contextPath + "/";
-        };
     }
 
     @Override

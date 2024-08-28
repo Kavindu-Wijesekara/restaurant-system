@@ -30,7 +30,7 @@ public class AuthService {
     }
 
     public CommonMessageModel loginUser(LoginModel loginModel, HttpServletRequest req) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        UserModel user = getAuthDao().loginUser(loginModel, req);
+        UserModel user = getAuthDao().loginUser(loginModel);
 
         if(user != null) {
             setUserSession(req, user);
