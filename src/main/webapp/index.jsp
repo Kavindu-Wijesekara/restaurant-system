@@ -12,7 +12,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC Restaurant - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -26,7 +43,7 @@
         <div class="container">
             <h1 class="display-4">Welcome to ABC Restaurant</h1>
             <p class="lead">Delicious food, Cozy Atmosphere, Memorable Experience</p>
-            <a href="reservation.jsp" class="btn btn-primary btn-lg">Make a Reservation</a>
+            <a href="/reservations" class="btn btn-primary btn-lg">Make a Reservation</a>
         </div>
     </section>
 </main>

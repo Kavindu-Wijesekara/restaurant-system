@@ -121,7 +121,7 @@
                             window.location.href = response.redirectUrl;
                         });
 
-                        // Optionally, you can set a timeout to automatically redirect
+                        // Timeout to automatically redirect
                         setTimeout(() => {
                             window.location.href = response.redirectUrl;
                         }, 5000); // Redirect after 5 seconds

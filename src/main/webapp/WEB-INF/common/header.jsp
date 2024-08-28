@@ -9,7 +9,7 @@
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
         <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Reservations</a></li>
+        <li class="nav-item"><a class="nav-link" href="reservations">Reservations</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         <% if (session.getAttribute("id") == null) { %>
         <li class="nav-item"><a class="nav-link" href="auth?action-type=login">Login</a></li>
