@@ -1,36 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ABC Restaurant - Home</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-
-    footer {
-      flex-shrink: 0;
-    }
-  </style>
-</head>
-<body>
-<!-- Navbar -->
+<%
+  request.setAttribute("pageTitle", "Menu");
+%>
 <%@include file="/WEB-INF/common/header.jsp" %>
 
 <main>
@@ -63,15 +36,7 @@
     function displayMenuItems(category) {
       $("#menu-items").empty(); // Clear existing items
 
-      let itemsToDisplay = [];
-
-      if (category === "all") {
-        // If "all" is selected, display all items
-        itemsToDisplay = restaurantMenu;
-      } else {
-        // Otherwise, filter items based on the selected category
-        itemsToDisplay = restaurantMenu.filter(item => item.item_type === category);
-      }
+      let itemsToDisplay = category === "all" ? restaurantMenu : restaurantMenu.filter(item => item.item_type === category);
 
       // Loop through the items and append them to the menu container
       itemsToDisplay.forEach(function (item) {
@@ -82,6 +47,7 @@
                 '<h3 class="card-title">' + item.item_name + '</h3>' +
                 '<p class="card-text">' + item.item_description + '</p>' +
                 '<p class="card-text"><strong>Price: $' + item.price.toFixed(2) + '</strong></p>' +
+                '<button class="btn btn-primary add-to-cart" data-id="' + item.id + '" data-name="' + item.item_name + '" data-price="' + item.price + '">Add to Cart</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -93,6 +59,24 @@
     $(".category-button").click(function() {
       const category = $(this).data("category");
       displayMenuItems(category);
+    });
+
+    // Event listener for Add to Cart buttons
+    $(document).on('click', '.add-to-cart', function() {
+      const foodId = $(this).data('id');
+      const name = $(this).data('name');
+      const price = $(this).data('price');
+
+      window.cart.addItem(foodId, name, price, 1);
+      window.updateCartDisplay();
+
+      Swal.fire({
+        title: 'Added to Cart!',
+        text: name + ' has been added to your cart.',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+      });
     });
 
     // Display all items by default on page load

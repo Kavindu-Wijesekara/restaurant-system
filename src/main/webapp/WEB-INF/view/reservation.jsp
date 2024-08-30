@@ -1,54 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Restaurant - Reservation</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        footer {
-            flex-shrink: 0;
-        }
-        .reservation-form {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-control:focus {
-            border-color: #0066cc;
-            box-shadow: none;
-        }
-        .submit-btn {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-        .submit-btn:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
-        .header-title {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-    </style>
-</head>
-<body>
-<!-- Navbar -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    request.setAttribute("pageTitle", "Reservations");
+%>
 <%@include file="/WEB-INF/common/header.jsp" %>
 
 <main>

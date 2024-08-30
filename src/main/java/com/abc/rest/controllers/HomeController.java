@@ -1,7 +1,6 @@
 package com.abc.rest.controllers;
 
 import com.abc.rest.models.CommonMessageModel;
-import com.abc.rest.models.LoginModel;
 import com.abc.rest.models.MenuItemModel;
 import com.abc.rest.models.ReservationModel;
 import com.abc.rest.services.HomeService;
@@ -36,13 +35,23 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String requestURI = req.getRequestURI();
-        String actionType = req.getParameter("action-type");
+        String contextPath = req.getContextPath();
+        String path = requestURI.substring(contextPath.length());
 
-        switch (requestURI) {
+        // Check if the request is for a static resource
+        if (path.startsWith("/assets/")) {
+            // Let the default servlet handle static resources
+            getServletContext().getNamedDispatcher("default").forward(req, res);
+            return;
+        }
+
+        switch (path) {
             case "/menu":
+                req.setAttribute("pageTitle", "Menu");
                 handleMenu(req, res);
                 break;
             case "/reservations":
+                req.setAttribute("pageTitle", "Reservations");
                 req.getRequestDispatcher("WEB-INF/view/reservation.jsp").forward(req, res);
                 break;
             default:
