@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cartModalLabel">Your Index</h5>
+        <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<footer class="bg-light py-4 mt-5">
+<footer class="bg-light py-4">
   <div class="container text-center">
     <p class="mb-0">&copy; 2024 ABC Restaurant. All Rights Reserved.</p>
   </div>

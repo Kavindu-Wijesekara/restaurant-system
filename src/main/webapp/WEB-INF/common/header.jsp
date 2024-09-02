@@ -18,10 +18,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
         <li class="nav-item"><a class="nav-link" href="/menu">Menu</a></li>
         <li class="nav-item"><a class="nav-link" href="/reservations">Reservations</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
         <% if (session.getAttribute("id") == null) { %>
         <li class="nav-item"><a class="nav-link" href="/auth?action-type=login">Login</a></li>
         <li class="nav-item"><a class="nav-link" href="/auth?action-type=register">Sign Up</a></li>

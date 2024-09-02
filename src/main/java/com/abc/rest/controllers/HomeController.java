@@ -50,6 +50,14 @@ public class HomeController extends HttpServlet {
                 req.setAttribute("pageTitle", "Menu");
                 handleMenu(req, res);
                 break;
+            case "/gallery":
+                req.setAttribute("pageTitle", "Gallery");
+                req.getRequestDispatcher("WEB-INF/view/gallery.jsp").forward(req, res);
+                break;
+            case "/contact":
+                req.setAttribute("pageTitle", "Contact");
+                req.getRequestDispatcher("WEB-INF/view/contact.jsp").forward(req, res);
+                break;
             case "/reservations":
                 req.setAttribute("pageTitle", "Reservations");
                 req.getRequestDispatcher("WEB-INF/view/reservation.jsp").forward(req, res);

@@ -70,6 +70,7 @@ function submitOrder() {
             console.log('Order submission response:', response);
             if (response.success) {
                 $('#orderForm').hide();
+                window.clearCart();
                 initializeStripePayment(response.clientSecret, response.orderId);
             } else {
                 showDialogBox('Error', response.message, 'error');
@@ -126,7 +127,6 @@ function initializeStripePayment(clientSecret, orderId) {
                     $('#error-message').text(error.message);
                 } else {
                     console.log('Payment successful');
-                    window.clearCart();
                 }
             } catch (stripeError) {
                 console.error('Error in stripe.confirmPayment:', stripeError);
