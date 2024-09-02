@@ -5,23 +5,14 @@
     response.setHeader("Pragma","no-cache");
     response.setDateHeader ("Expires", 0);
 %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Restaurant - Home</title>
-
-</head>
-<body>
-
-<!-- Navbar -->
 <%@include file="WEB-INF/common/header.jsp" %>
 
 <main>
     <!-- Hero Section -->
     <section class="hero bg-dark text-light text-center py-5">
-        <h1>Welcome, <%= session.getAttribute("full_name") %></h1>
+        <% if (session.getAttribute("full_name") != null) { %>
+        <h3>Hey, <%= session.getAttribute("full_name") %></h3>
+        <% } %>
         <div class="container">
             <h1 class="display-4">Welcome to ABC Restaurant</h1>
             <p class="lead">Delicious food, Cozy Atmosphere, Memorable Experience</p>

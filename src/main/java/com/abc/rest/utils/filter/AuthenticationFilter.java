@@ -18,11 +18,11 @@ public class AuthenticationFilter implements Filter {
         String registerURI = req.getContextPath() + "/auth?action-type=register";
         String adminURI = req.getContextPath() + "/admin";
         String staffURI = req.getContextPath() + "/staff";
+        String orderConfirmURI = req.getContextPath() + "/order/confirm";
 
         boolean loggedIn = session != null && session.getAttribute("id") != null;
         boolean isAdmin = loggedIn && session.getAttribute("role").equals("ADMIN");
         boolean isStaff = loggedIn && session.getAttribute("role").equals("STAFF");
-
 
         String requestURI = req.getRequestURI();
         String queryString = req.getQueryString();
@@ -48,6 +48,12 @@ public class AuthenticationFilter implements Filter {
             }
         } else if (req.getRequestURI().equals(staffURI)) {
             if (isStaff) {
+                chain.doFilter(request, response);
+            } else {
+                res.sendRedirect(loginURI);
+            }
+        } else if (req.getRequestURI().equals(orderConfirmURI)) {
+            if (loggedIn) {
                 chain.doFilter(request, response);
             } else {
                 res.sendRedirect(loginURI);

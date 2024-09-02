@@ -24,9 +24,6 @@
 
 <!-- Footer -->
 <%@include file="/WEB-INF/common/footer.jsp" %>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   // Convert Java object list to JSON
   const restaurantMenu = <%= new Gson().toJson(request.getAttribute("menuItems")) %>;
@@ -61,7 +58,7 @@
       displayMenuItems(category);
     });
 
-    // Event listener for Add to Cart buttons
+    // Event listener for Add to Index buttons
     $(document).on('click', '.add-to-cart', function() {
       const foodId = $(this).data('id');
       const name = $(this).data('name');

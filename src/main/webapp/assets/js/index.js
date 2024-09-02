@@ -1,4 +1,4 @@
-// cart.js
+// index.js
 
 class Cart {
     constructor() {
@@ -105,12 +105,12 @@ window.removeFromCart = function(foodId) {
 }
 
 window.confirmOrder = function() {
-    // Implement order confirmation logic here
-    console.log("Order confirmed:", window.cart.getItems());
+    window.location.href = '/order/confirm';
+}
+
+window.clearCart = function() {
     window.cart.clearCart();
     updateCartDisplay();
-    $('#cartModal').modal('hide');
-    Swal.fire('Order Confirmed!', 'Your order has been placed successfully.', 'success');
 }
 
 // Initialize cart display when the DOM is ready
@@ -122,3 +122,27 @@ $(document).ready(function() {
         updateCartModal();
     });
 });
+
+function showLoader() {
+    Swal.fire({
+        title: 'Loading...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+    })
+
+    setTimeout(() => {
+        Swal.close();
+    }, 10000);
+}
+
+function showDialogBox(title, message, icon) {
+    Swal.fire({
+        title: title,
+        text: message,
+        icon: icon,
+        confirmButtonText: 'Close'
+    })
+}

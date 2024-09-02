@@ -19,14 +19,14 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
-        <li class="nav-item"><a class="nav-link" href="reservations">Reservations</a></li>
+        <li class="nav-item"><a class="nav-link" href="/menu">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="/reservations">Reservations</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         <% if (session.getAttribute("id") == null) { %>
-        <li class="nav-item"><a class="nav-link" href="auth?action-type=login">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="auth?action-type=register">Sign Up</a></li>
+        <li class="nav-item"><a class="nav-link" href="/auth?action-type=login">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="/auth?action-type=register">Sign Up</a></li>
         <% } else { %>
-        <li class="nav-item"><a class="nav-link" href="auth?action-type=logout">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="/auth?action-type=logout">Logout</a></li>
         <% } %>
         <li class="nav-item">
           <button class="btn btn-outline-primary ms-2" type="button" data-bs-toggle="modal" data-bs-target="#cartModal">

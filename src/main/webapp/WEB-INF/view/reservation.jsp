@@ -53,8 +53,6 @@
 <!-- Footer -->
 <%@include file="/WEB-INF/common/footer.jsp" %>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('reservation_date').addEventListener('input', function() {
         const today = new Date();
@@ -121,30 +119,6 @@
             showLoader();
             return true;
         }
-    }
-
-    function showLoader() {
-        Swal.fire({
-            title: 'Loading...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        })
-
-        setTimeout(() => {
-            Swal.close();
-        }, 10000);
-    }
-
-    function showDialogBox(title, message, icon) {
-        Swal.fire({
-            title: title,
-            text: message,
-            icon: icon,
-            confirmButtonText: 'Close'
-        })
     }
 
     $(document).ready(function() {
