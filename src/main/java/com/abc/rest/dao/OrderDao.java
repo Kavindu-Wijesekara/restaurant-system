@@ -4,6 +4,7 @@ import com.abc.rest.models.Order;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface OrderDao {
 
@@ -14,5 +15,9 @@ public interface OrderDao {
     Order getOrderById(int orderId) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
     void updatePaymentIntentId(int orderId, String paymentIntentId) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
+
+    List<Order> getAllOrders() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
+
+    boolean updateOrderStatus(int orderId, String status) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
 }

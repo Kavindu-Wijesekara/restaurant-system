@@ -7,6 +7,7 @@ import java.util.List;
 public class Order {
     private int id;
     private int userId;
+    private String full_name;
     private Date orderDate;
     private BigDecimal totalAmount;
     private String status;
@@ -27,6 +28,14 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public int getUserId() {

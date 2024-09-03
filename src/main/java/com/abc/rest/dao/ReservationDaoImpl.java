@@ -6,7 +6,12 @@ import com.abc.rest.utils.database.ConnectionFactory;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationDaoImpl implements ReservationDao {
     private Connection getDbConnection() throws ClassNotFoundException, SQLException {
@@ -32,5 +37,58 @@ public class ReservationDaoImpl implements ReservationDao {
         con.close();
 
         return rowsInserted > 0;
+    }
+
+    @Override
+    public List<ReservationModel> getAllReservations() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+
+        List<ReservationModel> reservations = new ArrayList<>();
+        Connection con = getDbConnection();
+        String sql = "SELECT * FROM reservations";
+
+        PreparedStatement statement = con.prepareStatement(sql);
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("reservation_id");
+            String customerName = rs.getString("customer_name");
+            String customerEmail = rs.getString("customer_email");
+            String customerPhone = rs.getString("customer_phone");
+            LocalDate reservationDate = rs.getDate("reservation_date").toLocalDate();
+            LocalTime reservationTime = rs.getTime("reservation_time").toLocalTime();
+            int numberOfPeople = rs.getInt("number_of_people");
+            String specialRequest = rs.getString("special_requests");
+            String reservationType = rs.getString("reservation_type");
+            String status = rs.getString("status");
+            LocalDate createdAt = rs.getDate("created_at").toLocalDate();
+            reservations.add(new ReservationModel(id, customerName, customerEmail, customerPhone, reservationDate, reservationTime, numberOfPeople, specialRequest, reservationType, status, createdAt));
+        }
+
+        rs.close();
+        statement.close();
+        con.close();
+
+        return reservations;
+    }
+
+    @Override
+    public boolean updateReservationStatus(int i, String status) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+
+        Connection con = getDbConnection();
+        String sql = "UPDATE reservations SET status = ? WHERE reservation_id = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+
+        try {
+            statement.setString(1, status);
+            statement.setInt(2, i);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("DAO updateReservationStatus Error occurred while updating reservation: " + e.getMessage());
+            throw e;
+        } finally {
+            statement.close();
+            con.close();
+        }
     }
 }

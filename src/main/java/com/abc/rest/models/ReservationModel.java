@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ReservationModel {
-    @SerializedName("id")
+    @SerializedName("reservation_id")
     private int reservationId;
 
     @SerializedName("customer_name")
@@ -39,9 +39,11 @@ public class ReservationModel {
     @SerializedName("created_at")
     private LocalDate createdAt;
 
+
     // Default constructor
     public ReservationModel() {
     }
+
 
     // Parameterized constructor
     public ReservationModel(int reservationId, String customerName, String customerEmail, String customerPhone,

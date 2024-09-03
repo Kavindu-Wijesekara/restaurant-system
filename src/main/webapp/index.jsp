@@ -10,10 +10,10 @@
 <main>
     <!-- Hero Section -->
     <section class="hero bg-dark text-light text-center py-5">
-        <% if (session.getAttribute("full_name") != null) { %>
-        <h3>Hey, <%= session.getAttribute("full_name") %></h3>
-        <% } %>
         <div class="container">
+            <% if (session.getAttribute("full_name") != null) { %>
+            <h3>Hey, <%= session.getAttribute("full_name") %></h3>
+            <% } %>
             <h1 class="display-4">Welcome to ABC Restaurant</h1>
             <p class="lead">Delicious food, Cozy Atmosphere, Memorable Experience</p>
             <a href="/reservations" class="btn btn-primary btn-lg">Make a Reservation</a>

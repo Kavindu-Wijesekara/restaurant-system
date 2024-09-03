@@ -125,16 +125,4 @@ public class OrderService {
 
         return order;
     }
-
-    public void updatePaymentIntentId(int orderId, String paymentIntentId) throws SQLException, ClassNotFoundException, IllegalArgumentException, NoSuchAlgorithmException {
-        if (orderId <= 0) {
-            throw new IllegalArgumentException("Invalid order ID");
-        }
-
-        if (paymentIntentId == null || paymentIntentId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Payment intent ID cannot be empty");
-        }
-
-        orderDao.updatePaymentIntentId(orderId, paymentIntentId);
-    }
 }
