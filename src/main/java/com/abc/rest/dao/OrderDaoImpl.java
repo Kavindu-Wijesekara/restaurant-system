@@ -122,21 +122,7 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getAllOrders() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         List<Order> orders = new ArrayList<>();
         Connection con = getDbConnection();
-        String sql = "SELECT \n" +
-                "  u.full_name, \n" +
-                "  o.id, \n" +
-                "  o.order_date, \n" +
-                "  o.user_id, \n" +
-                "  o.total_amount, \n" +
-                "  o.status, \n" +
-                "  o.delivery_method, \n" +
-                "  o.address, \n" +
-                "  o.contact_number, \n" +
-                "  o.payment_status, \n" +
-                "  o.payment_intent_id\n" +
-                "FROM orders o\n" +
-                "JOIN users u ON o.user_id = u.id\n" +
-                "ORDER BY o.order_date DESC;\n";
+        String sql = "SELECT u.full_name, u.email, o.id, o.order_date, o.user_id, o.total_amount, o.status, o.delivery_method, o.address, o.contact_number, o.payment_status, o.payment_intent_id FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.order_date DESC";
 
         try (PreparedStatement statement = con.prepareStatement(sql)) {
             try (ResultSet rs = statement.executeQuery()) {
@@ -145,6 +131,7 @@ public class OrderDaoImpl implements OrderDao {
                     order.setId(rs.getInt("id"));
                     order.setUserId(rs.getInt("user_id"));
                     order.setFull_name(rs.getString("full_name"));
+                    order.setEmail(rs.getString("email"));
                     order.setOrderDate(rs.getTimestamp("order_date"));
                     order.setTotalAmount(rs.getBigDecimal("total_amount"));
                     order.setStatus(rs.getString("status"));

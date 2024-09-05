@@ -6,6 +6,7 @@ import com.abc.rest.dao.ReservationDao;
 import com.abc.rest.dao.ReservationDaoImpl;
 import com.abc.rest.models.Order;
 import com.abc.rest.models.ReservationModel;
+import com.abc.rest.utils.mail.EmailSender;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -30,6 +31,10 @@ public class StaffService {
         return new OrderDaoImpl();
     }
 
+    private static EmailSender getEmailSender() {
+        return EmailSender.getEmailSender();
+    }
+
     public List<ReservationModel> getAllReservations() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         return getReservationDao().getAllReservations();
     }
@@ -41,7 +46,27 @@ public class StaffService {
     public boolean updateReservationStatus(int i, String status, String message, String customerEmail) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         boolean updateStatus = getReservationDao().updateReservationStatus(i, status);
 
-        // TODO: Send email to customer
+        if ("Cancelled".equals(status)) {
+            getEmailSender().sendMail(customerEmail, "Reservation Cancelled", "Hey,\n" +
+                    "\n" +
+                    "Your reservation has been canceled. Reason: "+message+"\n" +
+                    "\n" +
+                    "Let us know if you need any info.\n" +
+                    "\n" +
+                    "Best regards,\n" +
+                    "ABC Restaurant Colombo");
+        }
+
+        if ("Confirmed".equals(status)) {
+            getEmailSender().sendMail(customerEmail, "Reservation Confirmed", "Hey,\n" +
+                    "\n" +
+                    "Your reservation has been confirmed. \n" +
+                    "\n" +
+                    "Let us know if you need any info.\n" +
+                    "\n" +
+                    "Best regards,\n" +
+                    "ABC Restaurant Colombo");
+        }
 
         if (!updateStatus) {
             throw new SQLException("Failed to update reservation status");
@@ -49,8 +74,64 @@ public class StaffService {
         return true;
     }
 
-    public boolean updateOrderStatus(int i, String status) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+    public boolean updateOrderStatus(int i, String status, String customerEmail) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         boolean updateStatus = getOrderDao().updateOrderStatus(i, status);
+
+        switch (status) {
+            case "Cancelled":
+                getEmailSender().sendMail(customerEmail, "Order Cancelled", "Hey,\n" +
+                        "\n" +
+                        "Your order has been canceled. \n" +
+                        "\n" +
+                        "Let us know if you need any info.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "ABC Restaurant Colombo");
+                break;
+            case "Delivered":
+                getEmailSender().sendMail(customerEmail, "Order Delivered", "Hey,\n" +
+                        "\n" +
+                        "Your order has been delivered. \n" +
+                        "\n" +
+                        "Let us know if you need any info.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "ABC Restaurant Colombo");
+                break;
+            case "Preparing":
+                getEmailSender().sendMail(customerEmail, "Order Prepared", "Hey,\n" +
+                        "\n" +
+                        "Your order has been prepared. \n" +
+                        "\n" +
+                        "Let us know if you need any info.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "ABC Restaurant Colombo");
+                break;
+            case "Ready for Pickup":
+                getEmailSender().sendMail(customerEmail, "Order Ready for Pickup", "Hey,\n" +
+                        "\n" +
+                        "Your order has been ready for pickup. \n" +
+                        "\n" +
+                        "Let us know if you need any info.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "ABC Restaurant Colombo");
+                break;
+            case "Out for Delivery":
+                getEmailSender().sendMail(customerEmail, "Order Out for Delivery", "Hey,\n" +
+                        "\n" +
+                        "Your order has been out for delivery. \n" +
+                        "\n" +
+                        "Let us know if you need any info.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "ABC Restaurant Colombo");
+                break;
+            default:
+                break;
+        }
+
         if (!updateStatus) {
             throw new RuntimeException("Failed to update order status");
         }

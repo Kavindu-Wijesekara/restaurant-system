@@ -109,8 +109,6 @@
                 data: $(this).serialize(), // Serialize form data
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
-                    showDialogBox('Success', response.message, 'success');
                     if(response.success) {
                         Swal.fire({
                             title: 'Success',

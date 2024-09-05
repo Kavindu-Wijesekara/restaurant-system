@@ -5,15 +5,11 @@ import com.abc.rest.dao.OrderDao;
 import com.abc.rest.dao.OrderDaoImpl;
 import com.abc.rest.models.Order;
 import com.abc.rest.models.OrderItem;
-import com.stripe.Stripe;
-import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
 public class OrderService {
     private OrderDao orderDao;

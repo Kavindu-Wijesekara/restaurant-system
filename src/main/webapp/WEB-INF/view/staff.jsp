@@ -78,6 +78,7 @@
             <div class="modal-body">
                 <form id="orderStatusUpdateForm">
                     <input type="hidden" id="orderId" name="orderId">
+                    <input type="hidden" id="customerEmailOrder" name="customerEmailOrder">
                     <div class="mb-3">
                         <label for="orderStatusSelect" class="form-label">Status</label>
                         <select class="form-select" id="orderStatusSelect" name="status" required>
@@ -124,8 +125,6 @@
     // Convert Java object lists to JSON using custom Gson instance
     const reservations = <%= gson.toJson(request.getAttribute("reservations")) %>;
     const orders = <%= gson.toJson(request.getAttribute("orders")) %>;
-
-    console.log(reservations, orders);
 
     $(document).ready(function() {
         // Function to display content based on category
@@ -220,7 +219,7 @@
                         '<button class="btn btn-info btn-sm me-2" type="button" data-bs-toggle="collapse" data-bs-target="#orderDetails' + index + '" aria-expanded="false" aria-controls="orderDetails' + index + '">' +
                         'Details' +
                         '</button>' +
-                        '<button class="btn btn-primary btn-sm update-order-status" data-order-id="' + order.id + '">' +
+                        '<button class="btn btn-primary btn-sm update-order-status" data-order-id="' + order.id + '" data-customer-email="' + order.email + '">' +
                         'Update Status' +
                         '</button>' +
                         '</td>' +
@@ -230,6 +229,7 @@
                         '<div class="collapse" id="orderDetails' + index + '">' +
                         '<div class="card card-body">' +
                         '<p><strong>Address:</strong> ' + (order.address || '') + '</p>' +
+                        '<p><strong>Email:</strong> ' + (order.email || '') + '</p>' +
                         '<p><strong>Contact Number:</strong> ' + (order.contactNumber || '') + '</p>' +
                         '<p><strong>User ID:</strong> ' + (order.userId || '') + '</p>' +
                         '<h6>Order Items:</h6>' +
@@ -256,7 +256,7 @@
             displayContent(category);
         });
 
-        // Event listener for update status buttons
+        // Event listener for update reservation status buttons
         $(document).on('click', '.update-status', function() {
             const reservationId = $(this).data('reservation-id');
             const customerEmail = $(this).data('customer-email');
@@ -268,7 +268,9 @@
         // Event listener for order update status buttons
         $(document).on('click', '.update-order-status', function() {
             const orderId = $(this).data('order-id');
+            const customerEmail = $(this).data('customer-email');
             $('#orderId').val(orderId);
+            $('#customerEmailOrder').val(customerEmail);
             $('#orderStatusUpdateModal').modal('show');
         });
 
@@ -290,7 +292,7 @@
             }
         });
 
-        // Event listener for update status submit
+        // Event listener for update reservation status submit
         $('#updateStatusBtn').click(function() {
             const formData = $('#statusUpdateForm').serialize();
             $.ajax({

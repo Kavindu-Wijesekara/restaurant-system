@@ -108,6 +108,8 @@ public class StaffController extends HttpServlet {
     private void handleOrder(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String orderId = req.getParameter("orderId");
         String status = req.getParameter("status");
+        String customerEmail = req.getParameter("customerEmailOrder");
+
 
         if (orderId == null || status == null) {
             sendJsonResponse(res, HttpServletResponse.SC_BAD_REQUEST, "Missing required parameters");
@@ -117,7 +119,8 @@ public class StaffController extends HttpServlet {
         try {
             boolean updated = getStaffService().updateOrderStatus(
                     Integer.parseInt(orderId),
-                    status
+                    status,
+                    customerEmail
             );
 
             if (updated) {

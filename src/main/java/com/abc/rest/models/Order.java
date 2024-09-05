@@ -8,6 +8,7 @@ public class Order {
     private int id;
     private int userId;
     private String full_name;
+    private String email;
     private Date orderDate;
     private BigDecimal totalAmount;
     private String status;
@@ -36,6 +37,14 @@ public class Order {
 
     public void setFull_name(String full_name) {
         this.full_name = full_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getUserId() {

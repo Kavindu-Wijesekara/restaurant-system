@@ -40,6 +40,7 @@ public class AuthService {
             return new CommonMessageModel("Incorrect Email or Password.", false, null);
         }
     }
+
     private void setUserSession(HttpServletRequest req, UserModel user) {
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(60 * 60);
@@ -80,7 +81,7 @@ public class AuthService {
         }else if(!userModel.getPassword().equals(userModel.getConfirmPassword())){
             return new CommonMessageModel("Passwords does not match", false, null);
         }else if(getAuthDao().checkIfUserExists(userModel.getEmail())){
-            return new CommonMessageModel("User already with the same Email or Phone Number", false, null);
+            return new CommonMessageModel("User already with the same Email.", false, null);
         } else {
             boolean isSuccess = getAuthDao().registerUser(userModel);
             if(isSuccess){
