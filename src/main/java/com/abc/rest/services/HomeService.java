@@ -1,9 +1,7 @@
 package com.abc.rest.services;
 
-import com.abc.rest.dao.MenuItemDao;
-import com.abc.rest.dao.MenuItemDaoImpl;
-import com.abc.rest.dao.ReservationDao;
-import com.abc.rest.dao.ReservationDaoImpl;
+import com.abc.rest.dao.*;
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.CommonMessageModel;
 import com.abc.rest.models.MenuItemModel;
 import com.abc.rest.models.ReservationModel;
@@ -28,6 +26,10 @@ public class HomeService {
 
     private MenuItemDao getMenuItemDao() {
         return new MenuItemDaoImpl();
+    }
+
+    private OrderDao getOrderDao() {
+        return new OrderDaoImpl();
     }
 
     private ReservationDao getReservationDao() {
@@ -90,5 +92,9 @@ public class HomeService {
             }
         }
         return true;
+    }
+
+    public List<Branch> getAllBranches() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        return getOrderDao().getAllBranches();
     }
 }

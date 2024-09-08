@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     request.setAttribute("pageTitle", "Reservations");
 %>
@@ -38,6 +40,14 @@
                             <input type="number" class="form-control" id="number_of_people" name="number_of_people" min="1" placeholder="Enter number of people" required>
                         </div>
                         <div class="form-group">
+                            <label for="branch"><i class="fas fa-building"></i> Branch</label>
+                            <select class="form-control" id="branch" name="branch" required>
+                                <option value="" disabled hidden selected>Select a branch</option>
+                                <!-- Branches will be populated here by JavaScript -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="special_request"><i class="fas fa-sticky-note"></i> Special Requests</label>
                             <textarea class="form-control" id="special_request" name="special_request" rows="3" placeholder="Enter any special requests"></textarea>
                         </div>
@@ -54,78 +64,91 @@
 <%@include file="/WEB-INF/common/footer.jsp" %>
 
 <script>
-    document.getElementById('reservation_date').addEventListener('input', function() {
-        const today = new Date();
-        const currentTime = today.getHours();
-        const selectedDate = new Date(this.value);
+    document.addEventListener('DOMContentLoaded', function() {
+        const branches = <%= new Gson().toJson(request.getAttribute("branches")) %>;
 
-        // Format today's date to YYYY-MM-DD
-        const formattedTodayDate = today.toISOString().split('T')[0];
-        const formattedSelectedDate = selectedDate.toISOString().split('T')[0];
+        console.log(branches);
 
-        // Disable today if current time is past 10 PM
-        if (currentTime >= 22) {
-            if (formattedSelectedDate === formattedTodayDate) {
-                alert('You cannot select today\'s date as it is past 10 PM.');
+        // Populate the branch dropdown
+        const branchSelect = document.getElementById('branch');
+
+        branches.forEach(branch => {
+            const option = document.createElement('option');
+            option.value = branch.branchId;
+            option.text = branch.branchName;
+            branchSelect.add(option);
+        });
+
+        document.getElementById('reservation_date').addEventListener('input', function() {
+            const today = new Date();
+            const currentTime = today.getHours();
+            const selectedDate = new Date(this.value);
+
+            const formattedTodayDate = today.toISOString().split('T')[0];
+            const formattedSelectedDate = selectedDate.toISOString().split('T')[0];
+
+            if (currentTime >= 22) {
+                if (formattedSelectedDate === formattedTodayDate) {
+                    alert('You cannot select today\'s date as it is past 10 PM.');
+                    this.value = '';
+                }
+            } else if (formattedSelectedDate < formattedTodayDate) {
+                alert('You cannot select a past date.');
                 this.value = '';
             }
-        } else if (formattedSelectedDate < formattedTodayDate) {
-            alert('You cannot select a past date.');
-            this.value = '';
+        });
+
+        function validateReservationForm() {
+            const emailRegex = /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;
+            const phonePattern = /[^0-9+]/g;
+            const name = document.getElementById("customer_name").value.trim();
+            const email = document.getElementById("customer_email").value.trim();
+            const phone = document.getElementById("customer_phone").value.trim();
+            const reservationDate = document.getElementById("reservation_date").value.trim();
+            const reservationTime = document.getElementById("reservation_time").value.trim();
+            const numberOfPeople = document.getElementById("number_of_people").value.trim();
+            const branch = document.getElementById("branch").value.trim();
+
+            const [hours, minutes] = reservationTime.split(':').map(Number);
+            const reservationHours = hours + minutes / 60;
+
+            const now = new Date();
+            const isPastDate = new Date(reservationDate) < now.setHours(0, 0, 0, 0);
+
+            if (name.length > 100 || name === "") {
+                showDialogBox("Operation Failed.", "Invalid Name", "error");
+                return false;
+            } else if (!emailRegex.test(email)) {
+                showDialogBox("Operation Failed.", "Invalid Email", "error");
+                return false;
+            } else if (phone.length > 15 || phone.length < 6 || phonePattern.test(phone)) {
+                showDialogBox("Operation Failed.", "Invalid Phone Number", "error");
+                return false;
+            } else if (reservationDate === "" || reservationTime === "") {
+                showDialogBox("Operation Failed.", "Date and Time are required", "error");
+                return false;
+            } else if (numberOfPeople <= 0) {
+                showDialogBox("Operation Failed.", "Number of People must be greater than 0", "error");
+                return false;
+            } else if (isPastDate) {
+                showDialogBox("Operation Failed.", "Reservation cannot be made for a past date", "error");
+                return false;
+            } else if (reservationHours >= 22 || reservationHours < 10) {
+                showDialogBox("Operation Failed.", "Reservations are not allowed between 10 PM and 10 AM.", "error");
+                return false;
+            } else if (!branch) {
+                showDialogBox("Operation Failed.", "Branch selection is required", "error");
+                return false;
+            } else {
+                showLoader();
+                return true;
+            }
         }
-    });
 
-    function validateReservationForm() {
-        const emailRegex = /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;
-        const phonePattern = /[^0-9+]/g;
-        const name = document.getElementById("customer_name").value.trim();
-        const email = document.getElementById("customer_email").value.trim();
-        const phone = document.getElementById("customer_phone").value.trim();
-        const reservationDate = document.getElementById("reservation_date").value.trim();
-        const reservationTime = document.getElementById("reservation_time").value.trim();
-        const numberOfPeople = document.getElementById("number_of_people").value.trim();
-
-        // Convert reservationTime to hours for validation
-        const [hours, minutes] = reservationTime.split(':').map(Number);
-        const reservationHours = hours + minutes / 60;
-
-        // Get current date and time
-        const now = new Date();
-
-        const isPastDate = new Date(reservationDate) < now.setHours(0, 0, 0, 0);
-
-        if (name.length > 100 || name === "") {
-            showDialogBox("Operation Failed.", "Invalid Name", "error");
-            return false;
-        } else if (!emailRegex.test(email)) {
-            showDialogBox("Operation Failed.", "Invalid Email", "error");
-            return false;
-        } else if (phone.length > 15 || phone.length < 6 || phonePattern.test(phone)) {
-            showDialogBox("Operation Failed.", "Invalid Phone Number", "error");
-            return false;
-        }  else if (reservationDate === "" || reservationTime === "") {
-            showDialogBox("Operation Failed.", "Date and Time are required", "error");
-            return false;
-        } else if (numberOfPeople <= 0) {
-            showDialogBox("Operation Failed.", "Number of People must be greater than 0", "error");
-            return false;
-        } else if (isPastDate) {
-            showDialogBox("Operation Failed.", "Reservation cannot be made for a past date", "error");
-            return false;
-        }  else if (reservationHours >= 22 || reservationHours < 10) {
-            showDialogBox("Operation Failed.", "Reservations are not allowed between 10 PM and 10 AM.", "error");
-            return false;
-        } else {
-            showLoader();
-            return true;
-        }
-    }
-
-    $(document).ready(function() {
         $('#reservationForm').on('submit', function(e) {
             e.preventDefault(); // Prevent form from submitting normally
 
-            showLoader()
+            showLoader();
 
             if (!validateReservationForm()) {
                 return; // If validation fails, stop the form submission
@@ -134,7 +157,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<%= request.getContextPath() %>/reservations',
-                data: $(this).serialize(), // Serialize form data
+                data: $(this).serialize(), // Serialize form data including branch selection
                 dataType: 'json',
                 success: function(response) {
                     console.log(response);
@@ -145,7 +168,7 @@
                             text: response.message,
                             icon: 'success',
                             confirmButtonText: 'OK'
-                        })
+                        });
                     } else {
                         showDialogBox('Error', response.message, 'error');
                     }
@@ -157,6 +180,7 @@
             });
         });
     });
+
 </script>
 
 

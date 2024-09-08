@@ -17,6 +17,7 @@ public class Order {
     private String contactNumber;
     private String paymentStatus;
     private String paymentIntentId;
+    private int branch_id;
     private List<OrderItem> orderItems;
 
     // Constructors
@@ -117,6 +118,14 @@ public class Order {
 
     public void setPaymentIntentId(String paymentIntentId) {
         this.paymentIntentId = paymentIntentId;
+    }
+
+    public int getBranch_id() {
+        return branch_id;
+    }
+
+    public void setBranch_id(int branch_id) {
+        this.branch_id = branch_id;
     }
 
     public List<OrderItem> getOrderItems() {

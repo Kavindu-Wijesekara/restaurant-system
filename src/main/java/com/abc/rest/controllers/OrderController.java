@@ -1,5 +1,6 @@
 package com.abc.rest.controllers;
 
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.Order;
 import com.abc.rest.models.OrderItem;
 import com.abc.rest.services.OrderService;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -48,7 +50,7 @@ public class OrderController extends HttpServlet {
         String action = splits[1];
         switch (action) {
             case "confirm":
-                req.getRequestDispatcher("/WEB-INF/view/order-confirmation-form.jsp").forward(req, resp);
+                handleOrderConfirmGet(req, resp);
                 break;
             case "confirmation":
                 showOrderConfirmation(req, resp);
@@ -56,6 +58,22 @@ public class OrderController extends HttpServlet {
             default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
+        }
+    }
+
+    private void handleOrderConfirmGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        List<Branch> branches = new ArrayList<Branch>();
+        try {
+            branches = orderService.getAllBranches();
+            req.setAttribute("branches", branches);
+        } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException e) {
+            // Handle the exception
+            System.out.println(e.getMessage());
+            req.setAttribute("errorMessage", e.getMessage());
+            e.printStackTrace();
+        } finally {
+            req.setAttribute("pageTitle", "Order Confirmation");
+            req.getRequestDispatcher("/WEB-INF/view/order-confirmation-form.jsp").forward(req, res);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.abc.rest.controllers;
 
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.CommonMessageModel;
 import com.abc.rest.models.MenuItemModel;
 import com.abc.rest.models.ReservationModel;
@@ -59,12 +60,27 @@ public class HomeController extends HttpServlet {
                 req.getRequestDispatcher("WEB-INF/view/contact.jsp").forward(req, res);
                 break;
             case "/reservations":
-                req.setAttribute("pageTitle", "Reservations");
-                req.getRequestDispatcher("WEB-INF/view/reservation.jsp").forward(req, res);
+                handleReservationGet(req, res);
                 break;
             default:
                 handleHome(req, res);
                 break;
+        }
+    }
+
+    private void handleReservationGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        List<Branch> branches = new ArrayList<Branch>();
+        try {
+            branches = getHomeService().getAllBranches();
+            req.setAttribute("branches", branches);
+        } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException e) {
+            // Handle the exception
+            System.out.println(e.getMessage());
+            req.setAttribute("errorMessage", e.getMessage());
+            e.printStackTrace();
+        } finally {
+            req.setAttribute("pageTitle", "Reservations");
+            req.getRequestDispatcher("WEB-INF/view/reservation.jsp").forward(req, res);
         }
     }
 
@@ -74,7 +90,7 @@ public class HomeController extends HttpServlet {
 
         switch (requestURI) {
             case "/reservations":
-                handleReservation(req, res);
+                handleReservationPost(req, res);
                 break;
             default:
                 handleHome(req, res);
@@ -82,7 +98,7 @@ public class HomeController extends HttpServlet {
         }
     }
 
-    private void handleReservation(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    private void handleReservationPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         CommonMessageModel message;
         res.setContentType("application/json");
         PrintWriter out = res.getWriter();
@@ -95,6 +111,7 @@ public class HomeController extends HttpServlet {
             String time = req.getParameter("reservation_time");
             String numberOfPeopleStr = req.getParameter("number_of_people");
             String specialRequest = req.getParameter("special_request");
+            String branch = req.getParameter("branch");
 
             // Convert numberOfPeople to integer
             int numberOfPeople = Integer.parseInt(numberOfPeopleStr);
@@ -112,6 +129,7 @@ public class HomeController extends HttpServlet {
             reservationModel.setReservationTime(reservationTime); // You may need a custom type or format for time
             reservationModel.setNumberOfPeople(numberOfPeople);
             reservationModel.setSpecialRequest(specialRequest);
+            reservationModel.setBranch_id(Integer.parseInt(branch));
 
             message = getHomeService().addReservation(reservationModel);
 

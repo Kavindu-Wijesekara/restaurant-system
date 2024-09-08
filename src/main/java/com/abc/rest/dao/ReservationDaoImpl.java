@@ -21,7 +21,7 @@ public class ReservationDaoImpl implements ReservationDao {
     @Override
     public boolean addReservation(ReservationModel reservationModel) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         Connection con = getDbConnection();
-        String query = "INSERT INTO `reservations`(`customer_name`, `customer_email`, `customer_phone`, `reservation_date`, `reservation_time`, `number_of_people`, `special_requests`) VALUES (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO `reservations`(`customer_name`, `customer_email`, `customer_phone`, `reservation_date`, `reservation_time`, `number_of_people`, `special_requests`, `branch_id`) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement statement = con.prepareStatement(query);
 
         statement.setString(1, reservationModel.getCustomerName());
@@ -31,6 +31,7 @@ public class ReservationDaoImpl implements ReservationDao {
         statement.setTime(5, java.sql.Time.valueOf(reservationModel.getReservationTime()));
         statement.setInt(6, reservationModel.getNumberOfPeople());
         statement.setString(7, reservationModel.getSpecialRequest());
+        statement.setInt(8, reservationModel.getBranch_id());
 
         int rowsInserted = statement.executeUpdate();
         statement.close();
@@ -40,13 +41,14 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public List<ReservationModel> getAllReservations() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+    public List<ReservationModel> getAllReservations(int branch_id) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
 
         List<ReservationModel> reservations = new ArrayList<>();
         Connection con = getDbConnection();
-        String sql = "SELECT * FROM reservations";
+        String sql = "SELECT * FROM reservations WHERE branch_id = ?";
 
         PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, branch_id);
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {

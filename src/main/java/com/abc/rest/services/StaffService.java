@@ -35,12 +35,12 @@ public class StaffService {
         return EmailSender.getEmailSender();
     }
 
-    public List<ReservationModel> getAllReservations() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        return getReservationDao().getAllReservations();
+    public List<ReservationModel> getAllReservations(int branch_id) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        return getReservationDao().getAllReservations(branch_id);
     }
 
-    public List<Order> getAllOrders() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        return getOrderDao().getAllOrders();
+    public List<Order> getAllOrders(int branch_id) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        return getOrderDao().getAllOrders(branch_id);
     }
 
     public boolean updateReservationStatus(int i, String status, String message, String customerEmail) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {

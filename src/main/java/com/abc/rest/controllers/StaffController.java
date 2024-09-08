@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -151,10 +152,12 @@ public class StaffController extends HttpServlet {
     private void handleStaffHome(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         List<ReservationModel> reservations = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
+        HttpSession session = req.getSession();
+        int branch_id = (int) session.getAttribute("branch_id");
 
         try {
-            reservations = getStaffService().getAllReservations();
-            orders = getStaffService().getAllOrders();
+            reservations = getStaffService().getAllReservations(branch_id);
+            orders = getStaffService().getAllOrders(branch_id);
         } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException e) {
             // Handle the exception
             System.out.println("Error fetching data: " + e.getMessage());

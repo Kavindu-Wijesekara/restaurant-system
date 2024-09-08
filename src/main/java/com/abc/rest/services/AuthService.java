@@ -50,6 +50,7 @@ public class AuthService {
         session.setAttribute("phone", user.getPhoneNumber());
         session.setAttribute("address", user.getAddress());
         session.setAttribute("role", user.getRole());
+        session.setAttribute("branch_id", user.getBranch_id());
     }
 
     private String determineRedirectUrl(String role, String contextPath) {

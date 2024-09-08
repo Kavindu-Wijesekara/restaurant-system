@@ -3,6 +3,7 @@ package com.abc.rest.services;
 
 import com.abc.rest.dao.OrderDao;
 import com.abc.rest.dao.OrderDaoImpl;
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.Order;
 import com.abc.rest.models.OrderItem;
 
@@ -10,12 +11,17 @@ import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 public class OrderService {
     private OrderDao orderDao;
 
     public OrderService() {
         this.orderDao = new OrderDaoImpl();
+    }
+
+    public List<Branch> getAllBranches() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        return orderDao.getAllBranches();
     }
 
     public Order createOrder(Order order) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException, IllegalArgumentException {

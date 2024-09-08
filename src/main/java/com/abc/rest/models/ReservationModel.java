@@ -39,6 +39,11 @@ public class ReservationModel {
     @SerializedName("created_at")
     private LocalDate createdAt;
 
+    @SerializedName("branch_id")
+    private int branch_id;
+
+    private String branch_name;
+
 
     // Default constructor
     public ReservationModel() {
@@ -149,6 +154,22 @@ public class ReservationModel {
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getBranch_name() {
+        return branch_name;
+    }
+
+    public void setBranch_name(String branch_name) {
+        this.branch_name = branch_name;
+    }
+
+    public int getBranch_id() {
+        return branch_id;
+    }
+
+    public void setBranch_id(int branch_id) {
+        this.branch_id = branch_id;
     }
 }
 

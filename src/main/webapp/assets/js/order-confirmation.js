@@ -2,7 +2,6 @@
 
 function initializeOrderConfirmation() {
     const cartItems = window.cart.getItems();
-    console.log('Cart items:', cartItems);
     const summaryElement = $('#orderSummary');
     const totalElement = $('#orderTotal');
 
@@ -47,8 +46,9 @@ function initializeOrderConfirmation() {
 
 function submitOrder() {
     const orderData = {
-        userId: window.userId, // Assume this is set globally
+        userId: window.userId,
         deliveryMethod: $('#deliveryMethod').val(),
+        branch_id: $('#branch_id').val(),
         address: $('#address').val(),
         contactNumber: $('#contactNumber').val(),
         orderItems: window.cart.getItems().map(item => ({

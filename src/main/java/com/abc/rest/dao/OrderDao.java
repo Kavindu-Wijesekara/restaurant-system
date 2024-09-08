@@ -1,5 +1,6 @@
 package com.abc.rest.dao;
 
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.Order;
 
 import java.security.NoSuchAlgorithmException;
@@ -16,8 +17,10 @@ public interface OrderDao {
 
     void updatePaymentIntentId(int orderId, String paymentIntentId) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
-    List<Order> getAllOrders() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
+    List<Order> getAllOrders(int branch_id) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
     boolean updateOrderStatus(int orderId, String status) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
+
+    List<Branch> getAllBranches() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
 }

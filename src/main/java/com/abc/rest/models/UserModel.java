@@ -30,7 +30,10 @@ public class UserModel {
     @SerializedName("created_at")
     private String createdAt;
 
-    public UserModel(int id, String fullName, String phone, String address, String email, String password, String role) {
+    @SerializedName("branch_id")
+    private int branch_id;
+
+    public UserModel(int id, String fullName, String phone, String address, String email, String password, String role, int branch_id) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phone;
@@ -38,6 +41,7 @@ public class UserModel {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.branch_id = branch_id;
     }
 
     // Getters and Setters
@@ -103,5 +107,13 @@ public class UserModel {
 
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    public int getBranch_id() {
+        return branch_id;
+    }
+
+    public void setBranch_id(int branch_id) {
+        this.branch_id = branch_id;
     }
 }

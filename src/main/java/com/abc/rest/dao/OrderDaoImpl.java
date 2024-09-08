@@ -1,5 +1,6 @@
 package com.abc.rest.dao;
 
+import com.abc.rest.models.Branch;
 import com.abc.rest.models.Order;
 import com.abc.rest.models.OrderItem;
 import com.abc.rest.utils.database.ConnectionFactory;
@@ -18,17 +19,17 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order saveOrder(Order order) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         Connection con = getDbConnection();
-        String sql = "INSERT INTO orders (user_id, order_date, total_amount, status, delivery_method, address, contact_number, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO orders (user_id, total_amount, status, delivery_method, address, contact_number, payment_status, branch_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getUserId());
-            statement.setTimestamp(2, new Timestamp(order.getOrderDate().getTime()));
-            statement.setBigDecimal(3, order.getTotalAmount());
-            statement.setString(4, order.getStatus());
-            statement.setString(5, order.getDeliveryMethod());
-            statement.setString(6, order.getAddress());
-            statement.setString(7, order.getContactNumber());
-            statement.setString(8, order.getPaymentStatus());
+            statement.setBigDecimal(2, order.getTotalAmount());
+            statement.setString(3, order.getStatus());
+            statement.setString(4, order.getDeliveryMethod());
+            statement.setString(5, order.getAddress());
+            statement.setString(6, order.getContactNumber());
+            statement.setString(7, order.getPaymentStatus());
+            statement.setInt(8, order.getBranch_id());
 
             int affectedRows = statement.executeUpdate();
 
@@ -119,12 +120,13 @@ public class OrderDaoImpl implements OrderDao {
 
 
     @Override
-    public List<Order> getAllOrders() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+    public List<Order> getAllOrders(int branch_id) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         List<Order> orders = new ArrayList<>();
         Connection con = getDbConnection();
-        String sql = "SELECT u.full_name, u.email, o.id, o.order_date, o.user_id, o.total_amount, o.status, o.delivery_method, o.address, o.contact_number, o.payment_status, o.payment_intent_id FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.order_date DESC";
+        String sql = "SELECT u.full_name, u.email, o.id, o.order_date, o.user_id, o.total_amount, o.status, o.delivery_method, o.address, o.contact_number, o.payment_status, o.payment_intent_id FROM orders o JOIN users u ON o.user_id = u.id WHERE o.branch_id = ? ORDER BY o.order_date DESC";
 
         try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setInt(1, branch_id);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     Order order = new Order();
@@ -169,6 +171,27 @@ public class OrderDaoImpl implements OrderDao {
             statement.close();
             con.close();
         }
+    }
+
+
+    @Override
+    public List<Branch> getAllBranches() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        Connection con = getDbConnection();
+        String sql = "SELECT * FROM branches";
+        List<Branch> branches = new ArrayList<>();
+        try (Statement statement = con.createStatement();
+             ResultSet rs = statement.executeQuery(sql)) {
+            while (rs.next()) {
+                Branch branch = new Branch();
+                branch.setBranchId(rs.getInt("branch_id"));
+                branch.setBranchName(rs.getString("branch_name"));
+                branches.add(branch);
+            }
+        } catch (SQLException e) {
+            System.out.println("DAO getAllBranches Error occurred while getting all branches: " + e.getMessage());
+            throw e;
+        }
+        return branches;
     }
 
 

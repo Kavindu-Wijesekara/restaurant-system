@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.google.gson.Gson" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     request.setAttribute("pageTitle", "Confirm Order");
@@ -17,6 +18,13 @@
                         <option value="">Choose...</option>
                         <option value="Delivery">Delivery</option>
                         <option value="Store Pickup">Store Pickup</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="branch_id" class="form-label">Branch</label>
+                    <select class="form-control" id="branch_id" name="branch_id" required>
+                        <option value="" disabled hidden selected>Select a branch</option>
+                        <!-- Branches will be populated here by JavaScript -->
                     </select>
                 </div>
                 <div id="deliveryAddressGroup" class="mb-3">
@@ -56,5 +64,18 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script src="${pageContext.request.contextPath}/assets/js/order-confirmation.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     window.userId = <%= session.getAttribute("id") %>
+    const branches = <%= new Gson().toJson(request.getAttribute("branches")) %>;
+
+    // Populate the branch dropdown
+    const branchSelect = document.getElementById('branch_id');
+
+    branches.forEach(branch => {
+        const option = document.createElement('option');
+        option.value = branch.branchId;
+        option.text = branch.branchName;
+        branchSelect.add(option);
+    });
+})
 </script>

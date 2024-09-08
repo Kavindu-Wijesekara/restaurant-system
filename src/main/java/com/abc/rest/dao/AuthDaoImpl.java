@@ -38,7 +38,8 @@ public class AuthDaoImpl implements AuthDao {
                             rs.getString("address"),
                             rs.getString("email"),
                             rs.getString("password"),
-                            rs.getString("role")
+                            rs.getString("role"),
+                            rs.getInt("branch_id")
                     );
                 }
             }
