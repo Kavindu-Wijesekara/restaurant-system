@@ -41,7 +41,6 @@ public class HomeController extends HttpServlet {
 
         // Check if the request is for a static resource
         if (path.startsWith("/assets/")) {
-            // Let the default servlet handle static resources
             getServletContext().getNamedDispatcher("default").forward(req, res);
             return;
         }
@@ -74,8 +73,6 @@ public class HomeController extends HttpServlet {
             branches = getHomeService().getAllBranches();
             req.setAttribute("branches", branches);
         } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException e) {
-            // Handle the exception
-            System.out.println(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
             e.printStackTrace();
         } finally {
@@ -145,14 +142,11 @@ public class HomeController extends HttpServlet {
     }
 
     private void handleMenu(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        // Add any menu-specific logic here
         List<MenuItemModel> menuItems = new ArrayList<MenuItemModel>();
         try {
             menuItems = getHomeService().getAllMenuItems();
             req.setAttribute("menuItems", menuItems);
         } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException e) {
-            // Handle the exception
-            System.out.println(e.getMessage());
             req.setAttribute("errorMessage", e.getMessage());
             e.printStackTrace();
         } finally {
@@ -161,7 +155,6 @@ public class HomeController extends HttpServlet {
     }
 
     private void handleHome(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        // Add any home page-specific logic here
         req.getRequestDispatcher("/").forward(req, res);
     }
 }

@@ -26,7 +26,7 @@ public class OrderController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        orderService = new OrderService(); // Assuming you have this implemented
+        orderService = new OrderService();
         stripeService = new StripeService();
         gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")

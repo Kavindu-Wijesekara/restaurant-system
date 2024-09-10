@@ -11,6 +11,9 @@ public class LoginModel {
     @SerializedName("password")
     String password;
 
+    public LoginModel(String mail, String password123) {
+    }
+
 
     public void setEmail(String email) {
         this.email = email;

@@ -25,12 +25,28 @@ public class AuthService {
         return authService;
     }
 
-    private AuthDao getAuthDao() {
-        return new AuthDaoImpl();
+    private AuthDao authDao;
+
+    public AuthService() {
+        this.authDao = new AuthDaoImpl();
+    }
+
+    // Constructor for dependency injection (for testing)
+    public AuthService(AuthDao authDao) {
+        this.authDao = authDao;
+    }
+
+    // Setter method to inject a mock AuthDao for testing
+    public void setAuthDao(AuthDao authDao) {
+        this.authDao = authDao;
+    }
+
+    public AuthDao getAuthDao() {
+        return this.authDao;
     }
 
     public CommonMessageModel loginUser(LoginModel loginModel, HttpServletRequest req) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        UserModel user = getAuthDao().loginUser(loginModel);
+        UserModel user = authDao.loginUser(loginModel);
 
         if(user != null) {
             setUserSession(req, user);

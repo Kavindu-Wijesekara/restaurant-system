@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Home Page</title>
+    <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-styles.css">
 </head>
@@ -26,23 +26,33 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="row text-center">
-        <div class="col-md-6 mb-4">
-            <div class="tile card shadow-sm" onclick="window.location.href='/admin/staff';">
+<div class="container mt-5">
+    <h1 class="mb-4">Reports</h1>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <i class="bi bi-people-fill icon"></i>
-                    <h3 class="card-title mt-3">Manage Staff</h3>
-                    <p class="card-text">Add, edit, or remove staff members.</p>
+                    <h5 class="card-title">User Activity Report</h5>
+                    <p class="card-text">Shows user login and activity patterns.</p>
+                    <button class="btn btn-primary">View Report</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
-            <div class="tile card shadow-sm" onclick="window.location.href='/admin/reports';">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <i class="bi bi-bar-chart-fill icon"></i>
-                    <h3 class="card-title mt-3">Reports</h3>
-                    <p class="card-text">View system and user reports.</p>
+                    <h5 class="card-title">System Performance Report</h5>
+                    <p class="card-text">Provides insights into system health and performance.</p>
+                    <button class="btn btn-primary">View Report</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Financial Report</h5>
+                    <p class="card-text">Summary of financial metrics and revenue.</p>
+                    <button class="btn btn-primary">View Report</button>
                 </div>
             </div>
         </div>

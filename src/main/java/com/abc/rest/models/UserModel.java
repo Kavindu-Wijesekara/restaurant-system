@@ -33,6 +33,8 @@ public class UserModel {
     @SerializedName("branch_id")
     private int branch_id;
 
+    private String branch_name;
+
     public UserModel(int id, String fullName, String phone, String address, String email, String password, String role, int branch_id) {
         this.id = id;
         this.fullName = fullName;
@@ -42,6 +44,31 @@ public class UserModel {
         this.password = password;
         this.role = role;
         this.branch_id = branch_id;
+    }
+    public UserModel(int id, String fullName, String phone, String address, String email, String role, int branch_id) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNumber = phone;
+        this.address = address;
+        this.email = email;
+        this.role = role;
+        this.branch_id = branch_id;
+    }
+
+    public UserModel(int id, String fullName, String email, String phoneNumber, String branch_name ) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.branch_name = branch_name;
+    }
+    public UserModel( String fullName, String email, String phoneNumber, String address, int branch_id, String password ) {
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.branch_id = branch_id;
+        this.password = password;
     }
 
     // Getters and Setters
@@ -115,5 +142,13 @@ public class UserModel {
 
     public void setBranch_id(int branch_id) {
         this.branch_id = branch_id;
+    }
+
+    public String getBranchName() {
+        return branch_name;
+    }
+
+    public void setBranchName(String branch_name) {
+        this.branch_name = branch_name;
     }
 }
