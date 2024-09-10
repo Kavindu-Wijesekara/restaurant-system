@@ -6,20 +6,22 @@ function initializeOrderConfirmation() {
     const totalElement = $('#orderTotal');
 
     function displayCartItems() {
+        var summaryElement = $('#orderSummary');
+        var totalElement = $('#orderTotal');
         summaryElement.empty();
         if (cartItems && cartItems.length > 0) {
             cartItems.forEach(function(item) {
                 var itemTotal = (item.price * item.quantity).toFixed(2);
                 summaryElement.append(
-                    '<div class="d-flex justify-content-between mb-2">' +
-                    '<span>' + item.name + ' x ' + item.quantity + '</span>' +
-                    '<span>$' + itemTotal + '</span>' +
+                    '<div class="d-flex justify-content-between mb-2 p-2 bg-dark rounded">' +
+                    '<span class="text-light">' + item.name + ' x ' + item.quantity + '</span>' +
+                    '<span class="text-amber">$' + itemTotal + '</span>' +
                     '</div>'
                 );
             });
             totalElement.text(window.cart.getTotalPrice().toFixed(2));
         } else {
-            summaryElement.append('<p>No items in cart</p>');
+            summaryElement.append('<p class="text-light">No items in cart</p>');
             totalElement.text('0.00');
         }
     }

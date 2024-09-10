@@ -11,42 +11,44 @@
 %>
 <%@include file="/WEB-INF/common/header.jsp" %>
 
-<main>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Staff Portal</h1>
+<main class="staff-portal bg-dark text-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-5 text-amber">Staff Portal</h1>
 
         <c:if test="${not empty errorMessage}">
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger custom-alert" role="alert">
                     ${errorMessage}
             </div>
         </c:if>
 
-        <div class="text-center mb-4">
-            <button class="btn btn-primary category-button" data-category="reservations">Reservations</button>
-            <button class="btn btn-secondary category-button" data-category="orders">Orders</button>
+        <div class="text-center mb-5">
+            <div class="btn-group" role="group" aria-label="Toggle between reservations and orders">
+                <button class="btn btn-amber category-button active" data-category="reservations">Reservations</button>
+                <button class="btn btn-amber category-button" data-category="orders">Orders</button>
+            </div>
         </div>
 
-        <div id="content-container" class="row">
+        <div id="content-container" class="row g-4">
             <!-- Content will be dynamically added here -->
         </div>
     </div>
 </main>
 
 <!-- Status Update Modal -->
-<div class="modal fade" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="statusUpdateModalLabel">Update Reservation Status</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade custom-modal" id="statusUpdateModal" tabindex="-1" aria-labelledby="statusUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark-gray">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title text-amber" id="statusUpdateModalLabel">Update Reservation Status</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="statusUpdateForm">
                     <input type="hidden" id="reservationId" name="reservationId">
                     <input type="hidden" id="customerEmail" name="customerEmail">
                     <div class="mb-3">
-                        <label for="statusSelect" class="form-label">Status</label>
-                        <select class="form-select" id="statusSelect" name="status" required>
+                        <label for="statusSelect" class="form-label text-light">Status</label>
+                        <select class="form-select custom-select" id="statusSelect" name="status" required>
                             <option value="">Choose status...</option>
                             <option value="Pending">Pending</option>
                             <option value="Confirmed">Confirmed</option>
@@ -54,34 +56,34 @@
                         </select>
                     </div>
                     <div id="cancellationReasonDiv" class="mb-3" style="display: none;">
-                        <label for="cancellationReason" class="form-label">Cancellation Reason</label>
-                        <textarea class="form-control" id="cancellationReason" name="cancellationReason" rows="3"></textarea>
+                        <label for="cancellationReason" class="form-label text-light">Cancellation Reason</label>
+                        <textarea class="form-control custom-textarea" id="cancellationReason" name="cancellationReason" rows="3"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateStatusBtn">Update Status</button>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-amber" id="updateStatusBtn">Update Status</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Order Status Update Modal -->
-<div class="modal fade" id="orderStatusUpdateModal" tabindex="-1" aria-labelledby="orderStatusUpdateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderStatusUpdateModalLabel">Update Order Status</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade custom-modal" id="orderStatusUpdateModal" tabindex="-1" aria-labelledby="orderStatusUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark-gray">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title text-amber" id="orderStatusUpdateModalLabel">Update Order Status</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="orderStatusUpdateForm">
                     <input type="hidden" id="orderId" name="orderId">
                     <input type="hidden" id="customerEmailOrder" name="customerEmailOrder">
                     <div class="mb-3">
-                        <label for="orderStatusSelect" class="form-label">Status</label>
-                        <select class="form-select" id="orderStatusSelect" name="status" required>
+                        <label for="orderStatusSelect" class="form-label text-light">Status</label>
+                        <select class="form-select custom-select" id="orderStatusSelect" name="status" required>
                             <option value="">Choose status...</option>
                             <option value="Pending">Pending</option>
                             <option value="Preparing">Preparing</option>
@@ -92,14 +94,14 @@
                         </select>
                     </div>
                     <div id="orderCancellationReasonDiv" class="mb-3" style="display: none;">
-                        <label for="orderCancellationReason" class="form-label">Cancellation Reason</label>
-                        <textarea class="form-control" id="orderCancellationReason" name="cancellationReason" rows="3"></textarea>
+                        <label for="orderCancellationReason" class="form-label text-light">Cancellation Reason</label>
+                        <textarea class="form-control custom-textarea" id="orderCancellationReason" name="cancellationReason" rows="3"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateOrderStatusBtn">Update Status</button>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-amber" id="updateOrderStatusBtn">Update Status</button>
             </div>
         </div>
     </div>
@@ -253,6 +255,8 @@
         // Event listener for category buttons
         $(".category-button").click(function() {
             const category = $(this).data("category");
+            $(".category-button").removeClass("active");
+            $(this).addClass("active");
             displayContent(category);
         });
 

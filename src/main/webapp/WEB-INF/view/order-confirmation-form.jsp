@@ -6,57 +6,57 @@
 %>
 <%@include file="/WEB-INF/common/header.jsp" %>
 
-<main class="container mt-5">
-    <h1 class="mb-4">Confirm Your Order</h1>
-    <form id="orderForm" method="post">
+<main class="container mt-5 order-confirmation">
+    <h1 class="mb-4 text-amber">Confirm Your Order</h1>
+    <form id="orderForm" method="post" class="bg-dark-gray p-4 rounded shadow">
         <div class="row">
             <div class="col-md-6 mb-3">
-                <h3>Delivery Information</h3>
+                <h3 class="text-amber mb-4">Delivery Information</h3>
                 <div class="mb-3">
-                    <label for="deliveryMethod" class="form-label">Delivery Method</label>
-                    <select class="form-select" id="deliveryMethod" name="deliveryMethod" required>
+                    <label for="deliveryMethod" class="form-label text-light">Delivery Method</label>
+                    <select class="form-select custom-select" id="deliveryMethod" name="deliveryMethod" required>
                         <option value="">Choose...</option>
                         <option value="Delivery">Delivery</option>
                         <option value="Store Pickup">Store Pickup</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="branch_id" class="form-label">Branch</label>
-                    <select class="form-control" id="branch_id" name="branch_id" required>
+                    <label for="branch_id" class="form-label text-light">Branch</label>
+                    <select class="form-select custom-select" id="branch_id" name="branch_id" required>
                         <option value="" disabled hidden selected>Select a branch</option>
                         <!-- Branches will be populated here by JavaScript -->
                     </select>
                 </div>
                 <div id="deliveryAddressGroup" class="mb-3">
-                    <label for="address" class="form-label">Delivery Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3">${sessionScope.address}</textarea>
+                    <label for="address" class="form-label text-light">Delivery Address</label>
+                    <textarea class="form-control custom-textarea" id="address" name="address" rows="3">${sessionScope.address}</textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="contactNumber" class="form-label">Contact Number</label>
-                    <input type="tel" class="form-control" id="contactNumber" name="contactNumber" value="${sessionScope.phone}" required>
+                    <label for="contactNumber" class="form-label text-light">Contact Number</label>
+                    <input type="tel" class="form-control custom-input" id="contactNumber" name="contactNumber" value="${sessionScope.phone}" required>
                 </div>
             </div>
             <div class="col-md-6">
-                <h3>Order Summary</h3>
-                <div id="orderSummary"></div>
+                <h3 class="text-amber mb-4">Order Summary</h3>
+                <div id="orderSummary" class="bg-darker-gray p-3 rounded"></div>
                 <div class="text-end mt-3">
-                    <h4>Total: $<span id="orderTotal">0.00</span></h4>
+                    <h4 class="text-light">Total: <span class="text-amber">$<span id="orderTotal">0.00</span></span></h4>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Proceed to Payment</button>
+        <button type="submit" class="btn btn-amber mt-4 w-100">Proceed to Payment</button>
     </form>
 
-    <form id="payment-form" class="mt-4" style="display: none;">
-        <div id="payment-element">
+    <form id="payment-form" class="mt-4 bg-dark-gray p-4 rounded shadow" style="display: none;">
+        <h3 class="text-amber mb-4">Payment Details</h3>
+        <div id="payment-element" class="mb-4">
             <!-- Stripe Elements will create form elements here -->
         </div>
-        <button id="submit" class="btn btn-primary mt-3">Pay now</button>
+        <button id="submit" class="btn btn-amber w-100">Pay now</button>
         <div id="error-message" class="text-danger mt-2">
             <!-- Display error message to your customers here -->
         </div>
     </form>
-
 </main>
 
 <%@include file="/WEB-INF/common/footer.jsp" %>

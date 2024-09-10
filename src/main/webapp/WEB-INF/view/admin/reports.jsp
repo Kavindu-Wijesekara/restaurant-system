@@ -6,9 +6,56 @@
     <title>Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-styles.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .navbar {
+            background-color: #1a1a1a !important;
+        }
+        .navbar-brand, .nav-link {
+            color: #ffc107 !important;
+        }
+        .nav-link:hover {
+            color: #ffca2c !important;
+        }
+        .card {
+            background-color: #1a1a1a;
+            border: none;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-title {
+            color: #ffc107;
+        }
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #121212;
+        }
+        .btn-primary:hover {
+            background-color: #ffca2c;
+            border-color: #ffca2c;
+            color: #121212;
+        }
+        .admin-header {
+            background-color: #1a1a1a;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 0 5px 5px 0;
+        }
+        .report-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">ABC Restaurant</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,32 +74,34 @@
     </div>
 </nav>
 <div class="container mt-5">
-    <h1 class="mb-4">Reports</h1>
+    <div class="admin-header">
+        <h1 class="mb-0">Reports Dashboard</h1>
+    </div>
     <div class="row">
         <div class="col-md-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">User Activity Report</h5>
-                    <p class="card-text">Shows user login and activity patterns.</p>
-                    <button class="btn btn-primary">View Report</button>
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-center">User Activity Report</h5>
+                    <p class="card-text text-center flex-grow-1">Shows user login and activity patterns.</p>
+                    <button class="btn btn-primary mt-auto w-100">View Report</button>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">System Performance Report</h5>
-                    <p class="card-text">Provides insights into system health and performance.</p>
-                    <button class="btn btn-primary">View Report</button>
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-center">System Performance Report</h5>
+                    <p class="card-text text-center flex-grow-1">Provides insights into system health and performance.</p>
+                    <button class="btn btn-primary mt-auto w-100">View Report</button>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Financial Report</h5>
-                    <p class="card-text">Summary of financial metrics and revenue.</p>
-                    <button class="btn btn-primary">View Report</button>
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-center">Financial Report</h5>
+                    <p class="card-text text-center flex-grow-1">Summary of financial metrics and revenue.</p>
+                    <button class="btn btn-primary mt-auto w-100">View Report</button>
                 </div>
             </div>
         </div>

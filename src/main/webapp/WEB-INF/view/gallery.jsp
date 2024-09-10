@@ -6,7 +6,7 @@
 
 <main>
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Food Gallery</h1>
+        <h1 class="text-center mb-4 header-title text-amber">Food Gallery</h1>
         <div class="gallery-container">
             <!-- Hardcoded image paths -->
             <div class="gallery-item">

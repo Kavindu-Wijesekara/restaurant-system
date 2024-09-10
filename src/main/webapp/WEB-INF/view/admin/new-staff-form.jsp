@@ -11,11 +11,46 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .bg-dark {
+            background-color: #121212 !important;
+        }
+        .bg-dark-gray {
+            background-color: #1a1a1a !important;
+        }
+        .bg-dark-input {
+            background-color: #2a2a2a !important;
+            border-color: #3a3a3a !important;
+        }
+        .text-amber {
+            color: #ffc107 !important;
+        }
+        .border-amber {
+            border-color: #ffc107 !important;
+        }
+        .bg-amber {
+            background-color: #ffc107 !important;
+        }
+        .btn-amber {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #121212;
+        }
+        .btn-amber:hover {
+            background-color: #ffca2c;
+            border-color: #ffca2c;
+            color: #121212;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        }
+    </style>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<body class="bg-dark text-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">ABC Restaurant</a>
+        <a class="navbar-brand text-amber" href="/">ABC Restaurant</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,44 +67,54 @@
     </div>
 </nav>
 <div class="container mt-5">
-    <h1 class="mb-4">Add New Staff</h1>
-    <form id="addStaffForm" method="POST" onsubmit="validateForm()">
-        <div class="mb-3">
-            <label for="full_name" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter staff's full name" required>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark-gray border-amber">
+                <div class="card-header bg-amber text-dark">
+                    <h2 class="mb-0">Add New Staff</h2>
+                </div>
+                <div class="card-body">
+                    <form id="addStaffForm" method="POST" onsubmit="validateForm()">
+                        <div class="mb-3">
+                            <label for="full_name" class="form-label text-light">Full Name</label>
+                            <input type="text" class="form-control bg-dark-input text-light" id="full_name" name="full_name" placeholder="Enter staff's full name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-light">Email Address</label>
+                            <input type="email" class="form-control bg-dark-input text-light" id="email" name="email" placeholder="Enter staff's email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label text-light">Phone Number</label>
+                            <input type="tel" class="form-control bg-dark-input text-light" id="phone" name="phone" placeholder="Enter staff's phone number" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label text-light">Address</label>
+                            <textarea class="form-control bg-dark-input text-light" id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="branch_id" class="form-label text-light">Branch</label>
+                            <select class="form-select bg-dark-input text-light" id="branch_id" name="branch_id" required>
+                                <option value="" disabled hidden selected>Select a branch</option>
+                                <!-- Branches will be populated here by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label text-light">Password</label>
+                            <input type="password" class="form-control bg-dark-input text-light" id="password" name="password" placeholder="Enter a password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label text-light">Confirm Password</label>
+                            <input type="password" class="form-control bg-dark-input text-light" id="confirmPassword" name="confirmPassword" placeholder="Confirm the password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-amber">Add Staff</button>
+                            <a href="/admin/staff" class="btn btn-outline-light">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter staff's email" required>
-        </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter staff's phone number" required>
-        </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
-            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="branch_id" class="form-label">Branch</label>
-            <select class="form-control" id="branch_id" name="branch_id" required>
-                <option value="" disabled hidden selected>Select a branch</option>
-                <!-- Branches will be populated here by JavaScript -->
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password" required>
-        </div>
-        <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the password" required>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Add Staff</button>
-            <a href="/admin/staff" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

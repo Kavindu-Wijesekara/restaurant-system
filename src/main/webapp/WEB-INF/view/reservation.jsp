@@ -6,54 +6,52 @@
 %>
 <%@include file="/WEB-INF/common/header.jsp" %>
 
-<main>
-    <div class="container mt-5">
+<main class="reservation-page bg-dark text-light py-5">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="reservation-form p-4">
-                    <h2 class="text-center mb-4 header-title">Make Your Reservation</h2>
+                <div class="reservation-form bg-dark-gray p-4 rounded shadow-lg">
+                    <h2 class="text-center mb-4 header-title text-amber">Make Your Reservation</h2>
                     <form id="reservationForm">
-                        <div class="form-group">
-                            <label for="customer_name"><i class="fas fa-user"></i> Name</label>
-                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter your name" required>
+                        <div class="form-group mb-3">
+                            <label for="customer_name" class="form-label"><i class="fas fa-user text-amber"></i> Name</label>
+                            <input type="text" class="form-control bg-input text-light border-0" id="customer_name" name="customer_name" placeholder="Enter your name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="customer_email"><i class="fas fa-envelope"></i> Email</label>
-                            <input type="email" class="form-control" id="customer_email" name="customer_email" placeholder="Enter your email" required>
+                        <div class="form-group mb-3">
+                            <label for="customer_email" class="form-label"><i class="fas fa-envelope text-amber"></i> Email</label>
+                            <input type="email" class="form-control bg-input text-light border-0" id="customer_email" name="customer_email" placeholder="Enter your email" required>
                         </div>
-                        <div class="form-group">
-                            <label for="customer_phone"><i class="fas fa-phone"></i> Phone</label>
-                            <input type="tel" class="form-control" id="customer_phone" name="customer_phone" placeholder="Enter your phone number" required>
+                        <div class="form-group mb-3">
+                            <label for="customer_phone" class="form-label"><i class="fas fa-phone text-amber"></i> Phone</label>
+                            <input type="tel" class="form-control bg-input text-light border-0" id="customer_phone" name="customer_phone" placeholder="Enter your phone number" required>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="reservation_date"><i class="fas fa-calendar-alt"></i> Date</label>
-                                <input type="date" class="form-control" id="reservation_date" name="reservation_date" required>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="reservation_date" class="form-label"><i class="fas fa-calendar-alt text-amber"></i> Date</label>
+                                <input type="date" class="form-control bg-input text-light border-0" id="reservation_date" name="reservation_date" required>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="reservation_time"><i class="fas fa-clock"></i> Time</label>
-                                <input type="time" class="form-control" id="reservation_time" name="reservation_time" required>
+                            <div class="col-md-6">
+                                <label for="reservation_time" class="form-label"><i class="fas fa-clock text-amber"></i> Time</label>
+                                <input type="time" class="form-control bg-input text-light border-0" id="reservation_time" name="reservation_time" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="number_of_people"><i class="fas fa-users"></i> Number of People</label>
-                            <input type="number" class="form-control" id="number_of_people" name="number_of_people" min="1" placeholder="Enter number of people" required>
+                        <div class="form-group mb-3">
+                            <label for="number_of_people" class="form-label"><i class="fas fa-users text-amber"></i> Number of People</label>
+                            <input type="number" class="form-control bg-input text-light border-0" id="number_of_people" name="number_of_people" min="1" placeholder="Enter number of people" required>
                         </div>
-                        <div class="form-group">
-                            <label for="branch"><i class="fas fa-building"></i> Branch</label>
-                            <select class="form-control" id="branch" name="branch" required>
+                        <div class="form-group mb-3">
+                            <label for="branch" class="form-label"><i class="fas fa-building text-amber"></i> Branch</label>
+                            <select class="form-select bg-input text-light border-0" id="branch" name="branch" required>
                                 <option value="" disabled hidden selected>Select a branch</option>
                                 <!-- Branches will be populated here by JavaScript -->
                             </select>
                         </div>
-
-                        <div class="form-group">
-                            <label for="special_request"><i class="fas fa-sticky-note"></i> Special Requests</label>
-                            <textarea class="form-control" id="special_request" name="special_request" rows="3" placeholder="Enter any special requests"></textarea>
+                        <div class="form-group mb-4">
+                            <label for="special_request" class="form-label"><i class="fas fa-sticky-note text-amber"></i> Special Requests</label>
+                            <textarea class="form-control bg-input text-light border-0" id="special_request" name="special_request" rows="3" placeholder="Enter any special requests"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-block submit-btn text-white mt-4">Submit Reservation</button>
+                        <button type="submit" class="btn btn-amber btn-lg w-100 submit-btn">Submit Reservation</button>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -169,6 +167,7 @@
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
+                        $('#reservationForm').trigger('reset');
                     } else {
                         showDialogBox('Error', response.message, 'error');
                     }

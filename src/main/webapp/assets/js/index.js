@@ -74,14 +74,14 @@ window.updateCartModal = function() {
             const itemElement = document.createElement('div');
             itemElement.className = 'cart-item mb-2';
             itemElement.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary me-2" onclick="updateQuantity(${item.foodId}, ${item.quantity - 1})">-</button>
-                        <button class="btn btn-sm btn-outline-secondary me-2" onclick="updateQuantity(${item.foodId}, ${item.quantity + 1})">+</button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.foodId})">Remove</button>
-                    </div>
-                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-dark-gray rounded">
+    <span class="text-light">${item.name} - <span class="text-amber">$${item.price.toFixed(2)}</span> x ${item.quantity}</span>
+    <div>
+        <button class="btn btn-sm btn-outline-amber me-2" onclick="updateQuantity(${item.foodId}, ${item.quantity - 1})">-</button>
+        <button class="btn btn-sm btn-outline-amber me-2" onclick="updateQuantity(${item.foodId}, ${item.quantity + 1})">+</button>
+        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.foodId})">Remove</button>
+    </div>
+</div>
             `;
             cartItemsElement.appendChild(itemElement);
         });
