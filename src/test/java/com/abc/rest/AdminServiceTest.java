@@ -59,16 +59,4 @@ public class AdminServiceTest {
         assertTrue(result);
         verify(mockAdminDao).deleteUser(userId);
     }
-
-    @Test
-    public void testGenerateReport() {
-        String reportType = "SALES";
-        String expectedReport = "Sales Report Data";
-        when(mockAdminDao.generateReport(reportType)).thenReturn(expectedReport);
-
-        String result = adminService.generateReport(reportType);
-
-        assertEquals(expectedReport, result);
-        verify(mockAdminDao).generateReport(reportType);
-    }
 }

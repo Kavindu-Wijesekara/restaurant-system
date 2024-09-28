@@ -81,27 +81,18 @@
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-center">User Activity Report</h5>
-                    <p class="card-text text-center flex-grow-1">Shows user login and activity patterns.</p>
-                    <button class="btn btn-primary mt-auto w-100">View Report</button>
+                    <h5 class="card-title text-center">Orders</h5>
+                    <p class="card-text text-center flex-grow-1">Detailed breakdown of order activity.</p>
+                    <a href="/admin/reports?type=orders" class="btn btn-primary mt-auto w-100">View Report</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-center">System Performance Report</h5>
-                    <p class="card-text text-center flex-grow-1">Provides insights into system health and performance.</p>
-                    <button class="btn btn-primary mt-auto w-100">View Report</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-center">Financial Report</h5>
-                    <p class="card-text text-center flex-grow-1">Summary of financial metrics and revenue.</p>
-                    <button class="btn btn-primary mt-auto w-100">View Report</button>
+                    <h5 class="card-title text-center">Reservations</h5>
+                    <p class="card-text text-center flex-grow-1">Detailed breakdown of reservation activity.</p>
+                    <a href="/admin/reports?type=reservations" class="btn btn-primary mt-auto w-100">View Report</a>
                 </div>
             </div>
         </div>

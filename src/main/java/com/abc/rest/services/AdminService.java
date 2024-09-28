@@ -1,8 +1,11 @@
 package com.abc.rest.services;
 
 import com.abc.rest.dao.AdminDao;
+import com.abc.rest.models.Order;
+import com.abc.rest.models.ReservationModel;
 import com.abc.rest.models.UserModel;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,7 +28,11 @@ public class AdminService {
         return adminDao.deleteUser(userId);
     }
 
-    public String generateReport(String reportType) {
-        return adminDao.generateReport(reportType);
+    public List<ReservationModel> getAllReservations() throws SQLException, ClassNotFoundException {
+        return adminDao.getAllReservations();
+    }
+
+    public List<Order> getAllOrders() throws SQLException, ClassNotFoundException {
+        return adminDao.getAllOrders();
     }
 }

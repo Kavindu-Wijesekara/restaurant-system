@@ -2,9 +2,7 @@ package com.abc.rest.controllers;
 
 import com.abc.rest.dao.AdminDao;
 import com.abc.rest.dao.AdminDaoImpl;
-import com.abc.rest.models.Branch;
-import com.abc.rest.models.CommonMessageModel;
-import com.abc.rest.models.UserModel;
+import com.abc.rest.models.*;
 import com.abc.rest.services.AdminService;
 import com.abc.rest.services.HomeService;
 import com.abc.rest.utils.data_mapper.DataMapper;
@@ -44,6 +42,7 @@ public class AdminController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
         String action = request.getParameter("action");
+        String type = request.getParameter("type");
 
         // Check if the request is for a static resource
         if (uri.startsWith("/assets/")) {
@@ -60,9 +59,43 @@ public class AdminController extends HttpServlet {
                 handleStaff(request, response);
             }
         } else if (uri.endsWith("/admin/reports")) {
-            request.getRequestDispatcher("/WEB-INF/view/admin/reports.jsp").forward(request, response);
+            if("orders".equals(type)) {
+                handleOrders(request, response);
+            } else if ("reservations".equals(type)) {
+                handleReservations(request, response);
+            } else {
+                request.getRequestDispatcher("/WEB-INF/view/admin/reports.jsp").forward(request, response);
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    private void handleReservations(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<ReservationModel> reservations = new ArrayList<ReservationModel>();
+        try {
+            reservations = adminService.getAllReservations();
+            request.setAttribute("reservations", reservations);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            request.getRequestDispatcher("/WEB-INF/view/admin/reservation-reports.jsp").forward(request, response);
+        }
+    }
+
+    private void handleOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Order> orders = new ArrayList<Order>();
+        try {
+            orders = adminService.getAllOrders();
+            request.setAttribute("orders", orders);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            request.getRequestDispatcher("/WEB-INF/view/admin/order-reports.jsp").forward(request, response);
         }
     }
 

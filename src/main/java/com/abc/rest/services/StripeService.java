@@ -35,6 +35,4 @@ public class StripeService {
         PaymentIntent paymentIntent = PaymentIntent.create(params);
         return paymentIntent.getClientSecret();
     }
-
-    // Add more methods as needed, such as for handling webhooks
 }
